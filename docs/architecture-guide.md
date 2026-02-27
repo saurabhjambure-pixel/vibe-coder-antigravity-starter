@@ -227,3 +227,43 @@ Design for:
 The strongest AI systems are not the most creative.
 
 They are the most structured.
+
+## 🏗 Architecture Overview
+
+```mermaid
+flowchart TD
+
+    User[User / High-Level Goal]
+
+    subgraph Orchestration Layer
+        Planner[Planner-Agent]
+        Orchestrator[Orchestrator-Agent]
+    end
+
+    subgraph Specialization Layer
+        DataAgent[DataAnalyst-Agent]
+        QAAgent[QA-Agent]
+    end
+
+    subgraph Capability Layer
+        Skill1[financial-data-parser]
+        Skill2[logic-sanity-check]
+        Skill3[artifact-verifier]
+    end
+
+    subgraph Governance Layer
+        Human[Human Review]
+    end
+
+    User --> Planner
+    Planner --> Orchestrator
+    Orchestrator --> DataAgent
+    Orchestrator --> QAAgent
+
+    DataAgent --> Skill1
+    DataAgent --> Skill2
+    QAAgent --> Skill2
+    QAAgent --> Skill3
+
+    DataAgent --> QAAgent
+    QAAgent --> Human
