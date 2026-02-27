@@ -1,134 +1,229 @@
 # Architecture Guide
 
-Antigravity is an orchestration platform built around modular capabilities and controlled agents.
+Antigravity is not a chat interface.
 
-This guide explains how to design systems that scale without becoming unstable.
+It is an orchestration platform built around modular skills, controlled agents, and structured artifacts.
+
+If you treat it like autocomplete, your system will become unpredictable as complexity increases.
+
+This guide explains how to design multi-agent systems that are reliable, scalable, and auditable.
 
 ---
 
 # 1️⃣ The Four Core Primitives
 
+Every Antigravity system is built from four primitives:
+
 ## Skills
 
-Modular, isolated capabilities.
+Skills are modular capabilities.
 
 A skill should:
-- Do one thing only
+- Perform exactly one responsibility
 - Be deterministic
 - Produce structured output
 - Include validation guardrails
 
-Bad design:
-- Multi-purpose skills
+Good skill design:
+- Narrow scope
+- Clear triggers
+- Strict output format
+- Explicit validation steps
+
+Bad skill design:
+- Multiple responsibilities in one skill
 - Vague reasoning instructions
-- No structured output
+- Free-form outputs
+- No verification
 
 ---
 
 ## Agents
 
-Specialized personas with limited permissions.
+Agents are specialized workers that use skills.
 
-Agents should:
-- Have narrow roles
-- Load minimal skills
-- Avoid overlapping responsibilities
-- Operate within restricted tool access
+An agent should:
+- Have a narrow role
+- Load only relevant skills
+- Operate under restricted permissions
+- Produce structured artifacts
 
-Unrestricted agents become unpredictable.
+Why restrict agents?
+
+Unrestricted agents:
+- Hallucinate tool usage
+- Overreach responsibilities
+- Become difficult to debug
+
+Controlled agents:
+- Are predictable
+- Are testable
+- Are safer
 
 ---
 
 ## Artifacts
 
-Structured, verifiable outputs.
+Artifacts are structured, verifiable outputs.
 
 Examples:
-- JSON
-- Logs
+- JSON files
 - Execution plans
+- Validation logs
 - Screenshots
-- Validation reports
+- Structured reports
 
-Artifacts create auditability and trust.
+Artifacts create:
+- Auditability
+- Reproducibility
+- Trust
+
+Without artifacts, you only have reasoning.
+With artifacts, you have evidence.
+
+Always prefer structured outputs over free-form text.
 
 ---
 
 ## Orchestration
 
-Complex tasks should not be handled by one agent.
+Orchestration is the coordination layer.
 
-Use structured delegation:
+Complex goals should not be handled by one agent.
 
-Planner → Specialists → QA → Human
+Instead, break work into roles:
+
+Planner → Specialists → QA → Human review
+
+This separation increases clarity and reliability.
 
 ---
 
-# 2️⃣ Progressive Disclosure
+# 2️⃣ Progressive Disclosure Model
 
 Antigravity loads skill metadata first.
 
-Only when a trigger matches does it load full instructions.
+Only when a trigger matches does it load the full skill instructions.
 
-This:
-- Preserves context window
-- Reduces token waste
-- Improves reasoning focus
+This provides:
+- Cleaner context windows
+- Reduced token waste
+- Improved reasoning focus
+- Better determinism
 
-Triggers must be precise and unambiguous.
+Design implication:
+
+Triggers must be:
+- Specific
+- Clear
+- Unambiguous
+
+If triggers are too vague:
+- Skills misfire
+- Or never fire
+
+Be intentional.
 
 ---
 
 # 3️⃣ Layered Architecture Model
 
-Layer 1 — Skills  
-Layer 2 — Agents  
-Layer 3 — Orchestration  
-Layer 4 — Governance (QA + Human)
+Think in layers:
 
-Each layer must exist.
+## Layer 1 — Capability Layer
+Individual skills.
+
+## Layer 2 — Specialization Layer
+Agents assigned specific skills.
+
+## Layer 3 — Coordination Layer
+Planner agent delegates tasks.
+
+## Layer 4 — Governance Layer
+QA validation + human oversight.
+
+If any layer is missing, reliability decreases.
 
 ---
 
-# 4️⃣ Deterministic Design Principles
+# 4️⃣ Permission Architecture
 
-- Validate inputs
-- Validate outputs
+Never give every agent:
+
+- Full browser access
+- Full terminal access
+- Full filesystem access
+
+Instead:
+
+Planner → read_only  
+Data Agent → terminal + read_only  
+QA Agent → browser + read_only  
+Orchestrator → minimal execution capability  
+
+Restricting permissions:
+- Improves determinism
+- Reduces misuse
+- Simplifies debugging
+
+---
+
+# 5️⃣ Deterministic Design Principles
+
+If a system must be trusted:
+
+- Always validate inputs
+- Always validate outputs
 - Always produce artifacts
+- Never assume missing data
 - Separate reasoning from execution
-- Restrict permissions aggressively
+
+AI systems fail quietly.
+
+Structure prevents silent failure.
 
 ---
 
-# 5️⃣ Anti-Patterns
+# 6️⃣ Anti-Patterns to Avoid
 
-## The God Agent
-One agent with many skills and full permissions.
+## ❌ The God Agent
+
+One massive agent with many skills and full permissions.
 
 Results:
 - Context overload
 - Tool misuse
-- Debugging difficulty
+- Hard debugging
+- Unpredictable behavior
 
-## Skill Bloat
-Large skills handling multiple responsibilities.
+---
+
+## ❌ Skill Bloat
+
+Large skills that attempt multiple responsibilities.
 
 Split aggressively.
 
 ---
 
-# 6️⃣ When Multi-Agent Design Makes Sense
+## ❌ Free-Form Output
 
-Use it when:
-- Tasks involve multiple domains
-- Validation is critical
-- Tools must be used
-- Auditability is required
+Allowing reasoning without structured artifacts.
 
-Avoid it for trivial tasks.
+Always require structured outputs.
 
 ---
 
 # Final Principle
 
-Design for clarity and reliability, not cleverness.
+Do not design for maximum intelligence.
+
+Design for:
+- Clarity
+- Isolation
+- Determinism
+- Auditability
+
+The strongest AI systems are not the most creative.
+
+They are the most structured.
