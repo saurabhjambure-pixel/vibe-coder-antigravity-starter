@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/saurabhjambure-pixel/vibe-coder-antigravity-starter/schema/agent.schema.json",
+  "title": "Antigravity agent.yaml",
+  "description": "Validates the agent.yaml configuration file used in this repo's .agent/agents/ directory. Note: agent.yaml is a community convention — official Antigravity permissions are set in the UI (Agent Manager → Settings → Advanced). See docs/antigravity-reference.md.",
+  "type": "object",
+  "required": ["name", "role", "description"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique agent identifier. PascalCase or kebab-case. Should match the filename (without .yaml).",
+      "pattern": "^[A-Za-z][A-Za-z0-9-]*$",
+      "minLength": 2,
+      "maxLength": 60,
+      "examples": ["Planner", "QA-Validator", "Content-Writer"]
+    },
+    "role": {
+      "type": "string",
+      "description": "Short professional title for this agent. Used in system prompt construction. Aim for clarity over cleverness.",
+      "minLength": 5,
+      "maxLength": 100,
+      "examples": ["Quality Assurance Lead", "Senior Financial Analyst", "Project Orchestrator"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Full explanation of what this agent does, what it does NOT do, and when to use it. This is the primary way humans (and other agents) understand scope.",
+      "minLength": 30,
+      "maxLength": 1000
+    },
+    "auto_load_skills": {
+      "type": "array",
+      "description": "COMMUNITY CONVENTION — not machine-enforced by Antigravity. Documents which skills this agent is expected to use. Must match skill names (kebab-case) present in .agent/skills/.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*[a-z0-9]$"
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "examples": [["task-planner"], ["logic-sanity-check", "artifact-verifier"]]
+    },
+    "permissions": {
+      "type": "object",
+      "description": "COMMUNITY DOCUMENTATION — not machine-enforced. Real permissions are set in Antigravity UI: Agent Manager → Settings → Advanced → Terminal. Include this block as human intent documentation only.",
+      "additionalProperties": false,
+      "properties": {
+        "browser": {
+          "type": "boolean",
+          "description": "Whether this agent is intended to have browser access. Corresponds to Antigravity's JavaScript Execution policy."
+        },
+        "terminal": {
+          "type": "boolean",
+          "description": "Whether this agent is intended to execute terminal commands. Corresponds to Antigravity's Terminal Command Auto Execution policy."
+        },
+        "file_system": {
+          "type": "string",
+          "description": "Intended file system access level for this agent.",
+          "enum": ["none", "read_only", "read_write", "write"]
+        }
+      }
+    },
+    "input_artifact": {
+      "type": "string",
+      "description": "Path (relative to workspace root) of the primary file this agent reads as input.",
+      "pattern": "^[a-zA-Z0-9/_.-]+$",
+      "examples": ["artifacts/tasks.json"]
+    },
+    "input_artifacts": {
+      "type": "array",
+      "description": "Paths of multiple input files when the agent requires more than one.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9/_.-]+$"
+      },
+      "minItems": 2,
+      "uniqueItems": true
+    },
+    "output_artifact": {
+      "type": "string",
+      "description": "Path (relative to workspace root) where this agent writes its primary output.",
+      "pattern": "^[a-zA-Z0-9/_.-]+$",
+      "examples": ["artifacts/tasks.json", "artifacts/qa-report.json"]
+    }
+  },
+  "oneOf": [
+    { "required": ["input_artifact"], "not": { "required": ["input_artifacts"] } },
+    { "required": ["input_artifacts"], "not": { "required": ["input_artifact"] } },
+    { "not": { "required": ["input_artifact"] }, "not": { "required": ["input_artifacts"] } }
+  ]
+}

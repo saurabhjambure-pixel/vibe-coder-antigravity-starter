@@ -1,0 +1,31 @@
+name: Validate Skills & Agents
+
+on:
+  push:
+    paths:
+      - ".agent/skills/**/SKILL.md"
+      - ".agent/agents/*.yaml"
+      - "schema/**"
+  pull_request:
+    paths:
+      - ".agent/skills/**/SKILL.md"
+      - ".agent/agents/*.yaml"
+      - "schema/**"
+
+jobs:
+  validate:
+    name: Schema Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install jsonschema pyyaml
+
+      - name: Validate all skills and agents
+        run: python schema/validate.py --verbose

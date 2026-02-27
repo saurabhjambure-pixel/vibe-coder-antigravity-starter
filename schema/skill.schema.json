@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/saurabhjambure-pixel/vibe-coder-antigravity-starter/schema/skill.schema.json",
+  "title": "Antigravity SKILL.md Frontmatter",
+  "description": "Validates the YAML frontmatter block in a SKILL.md file. Based on the official Antigravity Skills spec: https://antigravity.google/docs/skills",
+  "type": "object",
+  "required": ["name", "description"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique skill identifier. Must be kebab-case. Used as the directory name and referenced in agent auto_load_skills.",
+      "pattern": "^[a-z][a-z0-9-]*[a-z0-9]$",
+      "minLength": 3,
+      "maxLength": 60,
+      "examples": ["financial-data-parser", "logic-sanity-check"]
+    },
+    "description": {
+      "type": "string",
+      "description": "The PRIMARY semantic trigger. The Antigravity agent matches user intent against this field — NOT a triggers list. Write it as a full sentence describing when and why this skill should be loaded. Be specific about the scenario, action, and outcome.",
+      "minLength": 40,
+      "maxLength": 500,
+      "examples": [
+        "Use when the user wants to parse a financial spreadsheet and extract structured JSON data from it, including sanitization and schema validation."
+      ]
+    },
+    "triggers": {
+      "type": "array",
+      "description": "COMMUNITY EXTENSION — not part of the official Antigravity spec. If included, used only as human-readable documentation of expected trigger phrases. Does not affect engine behaviour.",
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 100
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": true
+    },
+    "version": {
+      "type": "string",
+      "description": "Optional semantic version for the skill. Useful when skills are shared across teams.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "2.3.1"]
+    },
+    "author": {
+      "type": "string",
+      "description": "Optional. GitHub handle or team name of the skill author.",
+      "maxLength": 80
+    },
+    "tags": {
+      "type": "array",
+      "description": "Optional. Categorical labels for discoverability (e.g. in skill indexes or README tables).",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "maxItems": 8,
+      "uniqueItems": true,
+      "examples": [["data", "validation", "finance"]]
+    }
+  }
+}
