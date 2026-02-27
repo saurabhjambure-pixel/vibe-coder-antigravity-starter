@@ -40,7 +40,31 @@ Instead of writing bigger prompts:
 AI systems should be structured, auditable, and deterministic.
 
 ---
+## 🛠️ The Mechanics at a Glance
 
+Antigravity orchestration relies on two simple, deterministic file structures: **Skills** and **Agents**.
+
+### 1. The Skill Template (`SKILL.md`)
+Skills live in `.agent/skills/`. The YAML frontmatter acts as the API endpoint for the LLM, ensuring it only loads the full instructions when a trigger is hit.
+
+```markdown
+---
+name: financial-data-parser
+description: Extracts, sanitizes, and structures financial spreadsheets into clean JSON.
+triggers:
+  - "parse financial data"
+  - "analyze runway"
+  - "read spreadsheet"
+---
+
+# Instructions
+1. Locate the target `.csv` or `.xlsx` file in the workspace.
+2. Run the included Python script in `/scripts/sanitize.py` to strip empty rows.
+3. Validate the extracted data against the schema in `/assets/schema.json`.
+4. Generate a verifiable Artifact containing the final JSON.
+
+# Guardrails
+Never infer missing financial data. If a cell is empty, flag it in the validation artifact.
 ## 📂 Repository Structure
 
 ```
