@@ -1,0 +1,75 @@
+# Orchestration Patterns
+
+Multi-agent systems require structure.
+
+Without orchestration, complexity becomes chaos.
+
+---
+
+# 1️⃣ PDCA Model
+
+## Plan
+Planner agent breaks high-level goal into atomic tasks.
+
+## Do
+Specialist agents execute tasks independently.
+
+## Check
+QA agent validates outputs using testing and validation skills.
+
+## Act
+Human reviews artifacts before merge or deployment.
+
+---
+
+# 2️⃣ Delegation Pattern
+
+Planner Agent
+  → Assigns structured tasks
+  → Does not execute logic
+
+Specialist Agents
+  → Execute only their domain-specific tasks
+
+QA Agent
+  → Runs validation skills
+  → Produces structured report
+
+Human
+  → Makes final decision
+
+---
+
+# 3️⃣ Artifact-First Workflow
+
+Never allow agents to produce only reasoning.
+
+Require:
+- JSON outputs
+- Execution plans
+- Validation logs
+- Screenshots (for UI verification)
+
+Artifacts reduce ambiguity.
+
+---
+
+# 4️⃣ Parallel Execution Pattern
+
+Independent tasks can be delegated simultaneously to different agents.
+
+Benefits:
+- Faster iteration
+- Clear separation of responsibilities
+- Reduced context overload
+
+---
+
+# 5️⃣ Escalation Pattern
+
+If QA fails validation:
+- Task is reassigned
+- Specialist corrects output
+- QA revalidates
+
+Repeat until artifact passes checks.
