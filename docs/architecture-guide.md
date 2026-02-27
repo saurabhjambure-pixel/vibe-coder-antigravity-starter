@@ -1,310 +1,134 @@
-Architecture Guide
+# Architecture Guide
 
-Antigravity is not a chat interface.
+Antigravity is an orchestration platform built around modular capabilities and controlled agents.
 
-It is a structured orchestration layer built around modular capabilities and controlled agents.
+This guide explains how to design systems that scale without becoming unstable.
 
-If you treat it like a better autocomplete tool, your system will eventually break under complexity.
+---
 
-This guide explains how to design systems that scale.
+# 1️⃣ The Four Core Primitives
 
-1️⃣ The Four Core Primitives
-
-Every Antigravity system is built from four primitives:
-
-1. Skills
+## Skills
 
 Modular, isolated capabilities.
 
 A skill should:
-
-Do exactly one thing
-
-Be deterministic
-
-Produce structured output
-
-Include validation guardrails
+- Do one thing only
+- Be deterministic
+- Produce structured output
+- Include validation guardrails
 
 Bad design:
+- Multi-purpose skills
+- Vague reasoning instructions
+- No structured output
 
-Skills that do multiple responsibilities
+---
 
-Skills that rely on vague reasoning
-
-Skills without strict output formats
-
-2. Agents
+## Agents
 
 Specialized personas with limited permissions.
 
-An agent should:
+Agents should:
+- Have narrow roles
+- Load minimal skills
+- Avoid overlapping responsibilities
+- Operate within restricted tool access
 
-Have a narrow role
+Unrestricted agents become unpredictable.
 
-Load only relevant skills
+---
 
-Avoid overlapping responsibilities
+## Artifacts
 
-Operate within restricted tool access
+Structured, verifiable outputs.
 
-Why?
+Examples:
+- JSON
+- Logs
+- Execution plans
+- Screenshots
+- Validation reports
 
-Unrestricted agents:
+Artifacts create auditability and trust.
 
-Hallucinate tool usage
+---
 
-Overreach
+## Orchestration
 
-Become unpredictable
+Complex tasks should not be handled by one agent.
 
-Controlled agents:
+Use structured delegation:
 
-Are testable
+Planner → Specialists → QA → Human
 
-Are auditable
+---
 
-Are safer
-
-3. Artifacts
-
-Verifiable structured outputs.
-
-Artifacts create:
-
-Auditability
-
-Reproducibility
-
-Trust
-
-Without artifacts, you only have reasoning.
-With artifacts, you have evidence.
-
-Always prefer:
-
-JSON
-
-Structured logs
-
-Execution plans
-
-Screenshots
-
-Validation reports
-
-4. Orchestration
-
-The structured coordination of multiple agents.
-
-Complex tasks should never be handled by one agent.
-
-Instead:
-
-Planner → Specialists → QA → Human review
-
-This creates reliability loops.
-
-2️⃣ Progressive Disclosure Model
+# 2️⃣ Progressive Disclosure
 
 Antigravity loads skill metadata first.
 
-Only when a trigger matches does it load the full instruction body.
+Only when a trigger matches does it load full instructions.
 
-This provides:
+This:
+- Preserves context window
+- Reduces token waste
+- Improves reasoning focus
 
-Cleaner context window
+Triggers must be precise and unambiguous.
 
-Reduced token waste
+---
 
-Better reasoning focus
+# 3️⃣ Layered Architecture Model
 
-Improved determinism
+Layer 1 — Skills  
+Layer 2 — Agents  
+Layer 3 — Orchestration  
+Layer 4 — Governance (QA + Human)
 
-Design implication:
+Each layer must exist.
 
-Triggers must be:
+---
 
-Specific
+# 4️⃣ Deterministic Design Principles
 
-Clear
+- Validate inputs
+- Validate outputs
+- Always produce artifacts
+- Separate reasoning from execution
+- Restrict permissions aggressively
 
-Unambiguous
+---
 
-Poor triggers lead to either:
+# 5️⃣ Anti-Patterns
 
-Skills never firing
+## The God Agent
+One agent with many skills and full permissions.
 
-Skills firing at wrong times
+Results:
+- Context overload
+- Tool misuse
+- Debugging difficulty
 
-3️⃣ The Layered Architecture Model
+## Skill Bloat
+Large skills handling multiple responsibilities.
 
-Think in layers:
+Split aggressively.
 
-Layer 1 — Capability Layer
+---
 
-Individual skills.
+# 6️⃣ When Multi-Agent Design Makes Sense
 
-Layer 2 — Specialization Layer
+Use it when:
+- Tasks involve multiple domains
+- Validation is critical
+- Tools must be used
+- Auditability is required
 
-Agents assigned specific skills.
+Avoid it for trivial tasks.
 
-Layer 3 — Coordination Layer
+---
 
-Planner agent delegates tasks.
+# Final Principle
 
-Layer 4 — Governance Layer
-
-QA + artifact verification + human oversight.
-
-If any layer is missing, reliability drops.
-
-4️⃣ Recommended Orchestration Pattern (PDCA)
-Plan
-
-Planner agent creates structured task list.
-
-Do
-
-Specialized agents execute in isolation.
-
-Check
-
-QA agent validates outputs via skills.
-
-Act
-
-Human reviews artifacts before merge or deployment.
-
-This pattern:
-
-Prevents silent failure
-
-Builds system trust
-
-Encourages modularity
-
-5️⃣ Permission Architecture
-
-Never give every agent:
-
-Full browser access
-
-Full terminal access
-
-Full file system access
-
-Instead:
-
-Planner → read_only
-Data Agent → terminal + read_only
-QA Agent → browser + read_only
-Orchestrator → no heavy execution
-
-Restricting permissions improves determinism.
-
-6️⃣ Anti-Patterns to Avoid
-❌ The God Agent
-
-One massive agent with 10+ skills and full permissions.
-
-This causes:
-
-Context overload
-
-Tool misuse
-
-Hard debugging
-
-Unpredictable behavior
-
-❌ Skill Bloat
-
-Creating giant skills that do multiple jobs.
-
-Split responsibilities aggressively.
-
-❌ Free-Form Output
-
-Allowing reasoning without structured artifacts.
-
-Always force structured outputs.
-
-7️⃣ Deterministic Design Principles
-
-If a system must be trusted:
-
-Always validate inputs
-
-Always validate outputs
-
-Always produce artifacts
-
-Never assume missing data
-
-Separate reasoning from execution
-
-AI systems fail quietly.
-Architecture prevents silent failure.
-
-8️⃣ When to Use Multi-Agent Design
-
-Use multi-agent orchestration when:
-
-Tasks involve multiple domains
-
-Validation is critical
-
-External tools are used
-
-Logic must be auditable
-
-Safety is important
-
-Avoid multi-agent design when:
-
-Task is simple
-
-Determinism is not required
-
-Single-pass generation is enough
-
-Over-engineering is real.
-
-9️⃣ Mental Model Shift
-
-Stop thinking:
-
-How do I prompt better?
-
-Start thinking:
-
-What capability should exist in this system?
-
-Skills define capability.
-Agents define responsibility.
-Orchestration defines reliability.
-
-🎯 Final Design Principle
-
-Design for:
-
-Clarity
-
-Isolation
-
-Determinism
-
-Auditability
-
-Not for:
-
-Clever prompts
-
-Overloaded agents
-
-Maximum intelligence
-
-The strongest AI systems are not the most creative.
-
-They are the most structured.
+Design for clarity and reliability, not cleverness.
