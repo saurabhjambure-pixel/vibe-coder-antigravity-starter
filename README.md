@@ -40,6 +40,7 @@ Instead of writing bigger prompts:
 AI systems should be structured, auditable, and deterministic.
 
 ---
+
 ## 🛠️ The Mechanics at a Glance
 
 Antigravity orchestration relies on two simple, deterministic file structures: **Skills** and **Agents**.
@@ -65,9 +66,32 @@ triggers:
 
 # Guardrails
 Never infer missing financial data. If a cell is empty, flag it in the validation artifact.
-## 📂 Repository Structure
 
 ```
+
+### 2. The Agent Template (`agent.yaml`)
+
+Agents live in `.agent/agents/`. You define their role, lock in their skills, and tightly restrict their system permissions.
+
+```yaml
+name: Founder-Metrics-Analyst
+role: "Senior Financial Analyst"
+description: "Specializes in parsing SaaS metrics, calculating runway, and building data artifacts."
+auto_load_skills:
+  - financial-data-parser
+  - confidence-scorer
+permissions:
+  browser: false
+  terminal: true
+  file_system: read_only
+
+```
+
+---
+
+## 📂 Repository Structure
+
+```text
 awesome-antigravity-skills/
 │
 ├── README.md
@@ -85,11 +109,52 @@ awesome-antigravity-skills/
     └── .agent/
         ├── skills/
         └── agents/
+
 ```
 
 ---
 
 ## 🚀 Getting Started
+
+### Quick Start (Frictionless Scaffold)
+
+Run this script in your project root to instantly scaffold the Antigravity architecture and generate your first QA agent and validation skill:
+
+```bash
+mkdir -p .agent/skills/logic-sanity-check .agent/agents
+
+cat <<EOF > .agent/agents/QA-Validator.yaml
+name: QA-Validator
+role: "Quality Assurance Lead"
+description: "Verifies the outputs of other agents before human review."
+auto_load_skills:
+  - logic-sanity-check
+permissions:
+  browser: true
+  terminal: false
+  file_system: read_only
+EOF
+
+cat <<EOF > .agent/skills/logic-sanity-check/SKILL.md
+---
+name: logic-sanity-check
+description: Verifies calculations and data integrity before final output.
+triggers:
+  - "run sanity check"
+  - "validate output"
+---
+
+# Instructions
+1. Review the generated Artifact.
+2. Recalculate any mathematical formulas independently.
+3. Output a Pass/Fail status with a list of any discrepancies.
+EOF
+
+echo "✅ Architecture scaffolded successfully in .agent/"
+
+```
+
+### Next Steps
 
 1. Read `docs/architecture-guide.md`
 2. Review `docs/orchestration-patterns.md`
@@ -110,6 +175,7 @@ Start small. Add structure before adding intelligence.
 * logic-sanity-check
 * anomaly-detector
 * api-schema-validator
+* **confidence-scorer** *(Ensures citations and validation scores)*
 
 ### Retrieval & Context
 
@@ -224,3 +290,5 @@ Agents give specialization.
 Orchestration gives reliability.
 
 If this repository helps you, consider starring ⭐ and contributing back.
+
+```
