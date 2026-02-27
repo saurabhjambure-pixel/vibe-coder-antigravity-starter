@@ -1,0 +1,45 @@
+{
+  "goal": "Write a 3-section product overview for a B2B SaaS invoicing tool targeting freelancers.",
+  "created_at": "2026-02-28T09:00:00Z",
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "Write the problem statement section",
+      "assigned_to": "Content-Writer",
+      "depends_on": [],
+      "inputs": "Target audience: freelancers. Pain point: chasing late payments and manual invoice creation.",
+      "expected_output": "2–3 paragraph section describing the problem freelancers face with invoicing today.",
+      "acceptance_criteria": [
+        "Mentions the target audience (freelancers) explicitly",
+        "Describes at least 2 distinct pain points",
+        "Is between 80 and 150 words"
+      ]
+    },
+    {
+      "id": "task-002",
+      "title": "Write the solution overview section",
+      "assigned_to": "Content-Writer",
+      "depends_on": ["task-001"],
+      "inputs": "Product: SaaS invoicing tool. Key features: automated reminders, one-click invoice generation, payment tracking dashboard.",
+      "expected_output": "2–3 paragraph section explaining how the product solves the problems described in task-001.",
+      "acceptance_criteria": [
+        "References the problem framing from task-001",
+        "Mentions all 3 key features by name",
+        "Uses plain, non-technical language suitable for non-developer freelancers"
+      ]
+    },
+    {
+      "id": "task-003",
+      "title": "Write the call-to-action section",
+      "assigned_to": "Content-Writer",
+      "depends_on": ["task-002"],
+      "inputs": "CTA goal: sign up for a free 14-day trial. Tone: confident but not pushy.",
+      "expected_output": "1 short paragraph (30–60 words) with a clear call to action.",
+      "acceptance_criteria": [
+        "Contains a direct call to action with the phrase 'free trial' or '14-day trial'",
+        "Matches a confident, non-pushy tone",
+        "Is between 30 and 60 words"
+      ]
+    }
+  ]
+}

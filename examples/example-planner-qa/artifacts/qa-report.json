@@ -1,0 +1,67 @@
+{
+  "validated_at": "2026-02-28T09:06:52Z",
+  "overall_status": "pass",
+  "task_audits": [
+    {
+      "task_id": "task-001",
+      "task_title": "Write the problem statement section",
+      "task_verdict": "pass",
+      "criteria_results": [
+        {
+          "criterion": "Mentions the target audience (freelancers) explicitly",
+          "verdict": "pass"
+        },
+        {
+          "criterion": "Describes at least 2 distinct pain points",
+          "verdict": "pass"
+        },
+        {
+          "criterion": "Is between 80 and 150 words",
+          "verdict": "pass"
+        }
+      ],
+      "reviewer_notes": "Word count verified at 118 words. Two distinct pain points identified: (1) time lost to manual formatting, (2) cash flow gap from delayed payments. Audience callout present in opening sentence."
+    },
+    {
+      "task_id": "task-002",
+      "task_title": "Write the solution overview section",
+      "task_verdict": "pass",
+      "criteria_results": [
+        {
+          "criterion": "References the problem framing from task-001",
+          "verdict": "pass"
+        },
+        {
+          "criterion": "Mentions all 3 key features by name",
+          "verdict": "pass"
+        },
+        {
+          "criterion": "Uses plain, non-technical language suitable for non-developer freelancers",
+          "verdict": "pass"
+        }
+      ],
+      "reviewer_notes": "All 3 features present: 'one-click invoice generation', 'payment tracking dashboard', 'automated reminders'. No technical jargon detected. Problem callbacks present ('no templates to wrangle', 'chase email' mirrors tone of task-001)."
+    },
+    {
+      "task_id": "task-003",
+      "task_title": "Write the call-to-action section",
+      "task_verdict": "pass",
+      "criteria_results": [
+        {
+          "criterion": "Contains a direct call to action with the phrase 'free trial' or '14-day trial'",
+          "verdict": "pass"
+        },
+        {
+          "criterion": "Matches a confident, non-pushy tone",
+          "verdict": "pass"
+        },
+        {
+          "criterion": "Is between 30 and 60 words",
+          "verdict": "pass"
+        }
+      ],
+      "reviewer_notes": "Word count verified at 38 words. Phrase '14-day trial' present. Tone assessment: confident (uses 'ready', 'faster') without pressure language. 'No credit card required' reduces friction without being pushy. Recommend human reviewer confirm tone alignment with brand voice."
+    }
+  ],
+  "human_review_required": true
+}

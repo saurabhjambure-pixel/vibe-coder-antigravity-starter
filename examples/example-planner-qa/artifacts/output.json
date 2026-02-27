@@ -1,0 +1,50 @@
+{
+  "completed_at": "2026-02-28T09:04:17Z",
+  "results": [
+    {
+      "task_id": "task-001",
+      "assigned_to": "Content-Writer",
+      "status": "done",
+      "output": "Freelancers spend a disproportionate amount of time on tasks that don't pay — and invoicing is one of the worst offenders. Between manually formatting invoices in spreadsheets, tracking who has paid and who hasn't, and sending awkward follow-up emails to late clients, the administrative burden can consume hours every week.\n\nWorse, inconsistent invoicing practices lead to delayed cash flow. Freelancers frequently wait 30, 60, or even 90 days for payments — not because clients refuse to pay, but because there's no reliable system nudging the process forward. For solo workers without a finance team, that gap between completing work and receiving payment creates real financial stress.",
+      "self_check": {
+        "criteria_met": [
+          "Mentions the target audience (freelancers) explicitly",
+          "Describes at least 2 distinct pain points",
+          "Is between 80 and 150 words"
+        ],
+        "criteria_failed": [],
+        "confidence": "high"
+      }
+    },
+    {
+      "task_id": "task-002",
+      "assigned_to": "Content-Writer",
+      "status": "done",
+      "output": "Our invoicing tool is built specifically for the way freelancers work — fast, solo, and without time to waste. With one-click invoice generation, you can go from completing a project to sending a professional invoice in under a minute. No templates to wrangle, no formatting to fuss over.\n\nThe payment tracking dashboard gives you a live view of what's outstanding, overdue, and paid — so you always know where you stand without digging through your inbox. And when a payment is running late, automated reminders handle the follow-up for you, professionally and on schedule, so you never have to write another awkward chase email.",
+      "self_check": {
+        "criteria_met": [
+          "References the problem framing from task-001",
+          "Mentions all 3 key features by name",
+          "Uses plain, non-technical language suitable for non-developer freelancers"
+        ],
+        "criteria_failed": [],
+        "confidence": "high"
+      }
+    },
+    {
+      "task_id": "task-003",
+      "assigned_to": "Content-Writer",
+      "status": "done",
+      "output": "Ready to get paid faster? Start your free 14-day trial today — no credit card required. Join thousands of freelancers who've taken the admin out of invoicing and put the focus back on their work.",
+      "self_check": {
+        "criteria_met": [
+          "Contains a direct call to action with the phrase '14-day trial'",
+          "Matches a confident, non-pushy tone",
+          "Is between 30 and 60 words"
+        ],
+        "criteria_failed": [],
+        "confidence": "high"
+      }
+    }
+  ]
+}
