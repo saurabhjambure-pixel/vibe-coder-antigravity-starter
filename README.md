@@ -1,294 +1,127 @@
-# 🌌 Awesome Antigravity Skills & Agent Architecture
+Perfect. We’ll:
 
-> For new vibe coders who want to move from prompting AI to engineering structured multi-agent systems in Google Antigravity.
+* Remove the diagram
+* Keep it clean
+* Sharpen the tone just enough to sound intentional, not unsure
+* Still grounded — no overpromising
 
-Antigravity is not a chat interface.
-It is an orchestration platform built around modular skills and controlled agents.
-
-If you treat it like autocomplete, your system will eventually collapse under complexity.
-
-This repository teaches you how to design:
-
-* Modular **Skills**
-* Specialized **Agents**
-* Multi-agent orchestration workflows
-* Deterministic validation loops
-* Safe permission models
+Here’s your revised **main `README.md`**:
 
 ---
 
-## ✨ What This Repo Provides
+# 🌌 Awesome Antigravity Skills & Agent Patterns
 
-* Production-ready skill templates
-* Agent configuration patterns
-* Architecture design principles
-* Orchestration workflows (PDCA model)
-* A forkable starter template
+> A structured starter reference for learning multi-agent workflows in Google Antigravity.
 
-This is built for developers who want structure, auditability, and reliability — not chaos prompting.
+I’m a PM learning to vibe code seriously.
+
+While experimenting with Antigravity, one thing became obvious:
+
+The model wasn’t the problem.
+Structure was.
+
+When everything lives in one giant agent with vague instructions, it works… until it doesn’t.
+
+So this repo is my attempt to design more deliberately:
+
+* What a **Skill** should own
+* What an **Agent** should own
+* How responsibilities should be separated
+* How validation should be built in
+
+This is not an official guide.
+It’s a structured way to approach multi-agent design while learning.
 
 ---
 
-## 🧠 Core Philosophy
+## 🧠 The Shift That Helped Me
 
 Instead of writing bigger prompts:
 
 * **Skills define capability**
 * **Agents define responsibility**
-* **Orchestration defines reliability**
+* **Validation builds trust**
 
-AI systems should be structured, auditable, and deterministic.
+Once I separated those cleanly, my experiments became far more predictable.
 
----
-
-## 🛠️ The Mechanics at a Glance
-
-Antigravity orchestration relies on two simple, deterministic file structures: **Skills** and **Agents**.
-
-### 1. The Skill Template (`SKILL.md`)
-Skills live in `.agent/skills/`. The YAML frontmatter acts as the API endpoint for the LLM, ensuring it only loads the full instructions when a trigger is hit.
-
-```markdown
----
-name: financial-data-parser
-description: Extracts, sanitizes, and structures financial spreadsheets into clean JSON.
-triggers:
-  - "parse financial data"
-  - "analyze runway"
-  - "read spreadsheet"
----
-
-# Instructions
-1. Locate the target `.csv` or `.xlsx` file in the workspace.
-2. Run the included Python script in `/scripts/sanitize.py` to strip empty rows.
-3. Validate the extracted data against the schema in `/assets/schema.json`.
-4. Generate a verifiable Artifact containing the final JSON.
-
-# Guardrails
-Never infer missing financial data. If a cell is empty, flag it in the validation artifact.
-
-```
-
-### 2. The Agent Template (`agent.yaml`)
-
-Agents live in `.agent/agents/`. You define their role, lock in their skills, and tightly restrict their system permissions.
-
-```yaml
-name: Founder-Metrics-Analyst
-role: "Senior Financial Analyst"
-description: "Specializes in parsing SaaS metrics, calculating runway, and building data artifacts."
-auto_load_skills:
-  - financial-data-parser
-  - confidence-scorer
-permissions:
-  browser: false
-  terminal: true
-  file_system: read_only
-
-```
+Not perfect — but controlled.
 
 ---
 
-## 📂 Repository Structure
+## 📂 What’s Inside
 
-```text
-awesome-antigravity-skills/
-│
-├── README.md
-├── LICENSE
-├── CONTRIBUTING.md
-├── docs/
-│   ├── architecture-guide.md
-│   └── orchestration-patterns.md
-│
-├── examples/
-│   ├── skill-templates/
-│   └── agent-templates/
-│
-└── starter-template/
-    └── .agent/
-        ├── skills/
-        └── agents/
+### `docs/`
 
-```
+* `architecture-guide.md` → Layered thinking for skills, agents, and governance
+* `orchestration-patterns.md` → Practical multi-agent coordination patterns
 
----
+### `examples/`
 
-## 🚀 Getting Started
+* Clear skill templates
+* Focused agent templates
 
-### Quick Start (Frictionless Scaffold)
+### `starter-template/`
 
-Run this script in your project root to instantly scaffold the Antigravity architecture and generate your first QA agent and validation skill:
+A minimal `.agent` setup with:
 
-```bash
-mkdir -p .agent/skills/logic-sanity-check .agent/agents
+* A few narrowly scoped skills
+* Three focused agents (Planner, Data, QA)
+* Explicit permission boundaries
 
-cat <<EOF > .agent/agents/QA-Validator.yaml
-name: QA-Validator
-role: "Quality Assurance Lead"
-description: "Verifies the outputs of other agents before human review."
-auto_load_skills:
-  - logic-sanity-check
-permissions:
-  browser: true
-  terminal: false
-  file_system: read_only
-EOF
-
-cat <<EOF > .agent/skills/logic-sanity-check/SKILL.md
----
-name: logic-sanity-check
-description: Verifies calculations and data integrity before final output.
-triggers:
-  - "run sanity check"
-  - "validate output"
----
-
-# Instructions
-1. Review the generated Artifact.
-2. Recalculate any mathematical formulas independently.
-3. Output a Pass/Fail status with a list of any discrepancies.
-EOF
-
-echo "✅ Architecture scaffolded successfully in .agent/"
-
-```
-
-### Next Steps
-
-1. Read `docs/architecture-guide.md`
-2. Review `docs/orchestration-patterns.md`
-3. Explore `examples/skill-templates/`
-4. Explore `examples/agent-templates/`
-5. Fork `starter-template/`
-6. Build your first Planner → QA loop
-
-Start small. Add structure before adding intelligence.
+It’s intentionally small and opinionated.
 
 ---
 
-## 🧰 Included Skill Categories
+## 🎯 Who This Is For
 
-### Data & Validation
+* PMs learning to vibe code
+* Builders experimenting with Antigravity
+* Anyone trying to avoid messy multi-agent setups
 
-* financial-data-parser
-* logic-sanity-check
-* anomaly-detector
-* api-schema-validator
-* **confidence-scorer** *(Ensures citations and validation scores)*
+If you’re looking for production-grade distributed systems architecture, this isn’t that.
 
-### Retrieval & Context
-
-* rag-knowledge-retrieval
-* prompt-compression-engine
-
-### Testing & Governance
-
-* regression-test-runner
-* artifact-verifier
-* feature-flag-tester
-
-### Automation & Infrastructure
-
-* browser-ui-verifier
-* dependency-auditor
-* performance-profiler
-* migration-risk-analyzer
-* decision-explainer
-
-All skills are designed to:
-
-* Be modular
-* Use clear trigger phrases
-* Produce structured artifacts
-* Enforce guardrails
+If you’re trying to think more clearly about structure, it might help.
 
 ---
 
-## 🔄 Recommended Orchestration Pattern (PDCA)
+## ⚠ What This Repo Is Not
 
-**Plan**
-Planner agent breaks high-level goals into atomic tasks.
+* Not an official Antigravity framework
+* Not a production-ready architecture
+* Not a collection of prompt hacks
+* Not a complete solution
 
-**Do**
-Specialist agents execute tasks independently.
-
-**Check**
-QA agent validates outputs using structured validation skills.
-
-**Act**
-Human reviews artifacts before merge or deployment.
-
-This loop prevents silent failure and builds system trust.
+It’s a disciplined starting point.
 
 ---
 
-## ⚠ Common Mistakes to Avoid
+## 🚀 How to Use This
 
-* Creating one mega-agent with full permissions
-* Writing vague skill triggers
-* Allowing free-form output without artifacts
-* Mixing multiple responsibilities inside one skill
-* Skipping validation loops
+1. Read the architecture guide.
+2. Explore the skill and agent templates.
+3. Fork the starter template.
+4. Add one skill at a time.
+5. Resist the urge to create a “god agent.”
 
-AI systems fail quietly. Structure prevents silent failure.
+The goal isn’t complexity.
 
----
-
-## 🧭 Who This Is For
-
-* Developers exploring Antigravity
-* AI engineers designing orchestration systems
-* Builders creating logic-heavy assistants
-* Teams that need auditability and guardrails
-
-If you just want better autocomplete, this isn’t for you.
-
-If you want architecture-level control, welcome.
+It’s clarity.
 
 ---
 
-## 🤝 Contributing
+## 🤝 Feedback Welcome
 
-Contributions are welcome.
+I’m still learning, but I’m being intentional about structure.
 
-To add a skill:
-
-1. Create a new directory under `examples/skill-templates/`
-2. Add a structured `SKILL.md`
-3. Keep scope narrow and deterministic
-4. Include guardrails and structured outputs
-
-To add an agent:
-
-* Define a narrow role
-* Restrict permissions
-* Avoid overlap with existing agents
-
-See `CONTRIBUTING.md` for details.
-
----
-
-## 📜 License
-
-MIT License.
+If you’re experimenting with multi-agent workflows, I’d genuinely appreciate thoughtful feedback or improvements.
 
 ---
 
 ## ⭐ Final Thought
 
-AI engineering is shifting from:
+AI systems don’t break because they aren’t smart enough.
 
-> “How do I prompt better?”
+They break because responsibilities aren’t clear.
 
-to:
+This repo is my attempt to make those boundaries explicit.
 
-> “How do I design systems that don’t break?”
-
-Skills give capability.
-Agents give specialization.
-Orchestration gives reliability.
-
-If this repository helps you, consider starring ⭐ and contributing back.
-
-```
