@@ -1,13 +1,3 @@
-Perfect. We’ll:
-
-* Remove the diagram
-* Keep it clean
-* Sharpen the tone just enough to sound intentional, not unsure
-* Still grounded — no overpromising
-
-Here’s your revised **main `README.md`**:
-
----
 
 # 🌌 Awesome Antigravity Skills & Agent Patterns
 
