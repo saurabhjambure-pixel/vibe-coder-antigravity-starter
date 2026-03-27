@@ -1,0 +1,47 @@
+runtime:
+  version: "1.0"
+  execution_mode: "restricted" # Options: sandbox, restricted, open
+
+permissions:
+  terminal:
+    # Commands the agent is explicitly allowed to run
+    allow:
+      - "ls -R"
+      - "git status"
+      - "git diff"
+      - "git log --oneline"
+      - "python --version"
+      - "python -m pytest"
+      - "pip list"
+      - "cat **/*.md"
+      - "mkdir -p"
+      - "touch"
+
+    # Commands that are strictly forbidden to prevent 'Game Over' scenarios
+    deny:
+      - "rm -rf /"           # Prevent system-wide deletion
+      - "sudo *"             # Block elevation of privileges
+      - "curl * | bash"      # Prevent unverified remote execution
+      - "mkfs"               # Block disk formatting
+      - "chown"              # Prevent ownership changes
+      - "chmod 777"          # Block dangerous permission loosening
+      - "kill -9 *"          # Block forceful process termination
+
+  filesystem:
+    # Limit the agent's reach to specific directories
+    read_only:
+      - "/etc/hosts"         # Example of system files it can only read
+    read_write:
+      - "./.agents/**"       # Primary workspace for skills and agents
+      - "./docs/**"          # Documentation updates
+      - "./examples/**"      # Template experimentation
+    deny:
+      - "~/.ssh/**"          # Keep your keys private
+      - "~/.aws/**"          # Protect cloud credentials
+      - "**/.env"            # Protect local secrets and API keys
+
+# Governance: Define how the agent should handle ambiguity
+governance:
+  auto_approve_safe_commands: true
+  require_human_intervention_on_deny: true
+  log_all_commands: true
