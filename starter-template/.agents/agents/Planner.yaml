@@ -1,0 +1,11 @@
+name: Planner
+role: "Task decomposition and orchestration"
+description: >
+  Break user goals into ordered, atomic tasks with owners and expected artifacts.
+auto_load_skills:
+  - task-planner
+permissions:
+  terminal: false
+  browser: false
+  file_system: read_only
+output_artifact: artifacts/tasks.json

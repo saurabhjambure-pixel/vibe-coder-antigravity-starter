@@ -58,19 +58,28 @@ class FileSpec:
 # ── Template library ─────────────────────────────────────────────────────────
 
 def make_skill_md(name: str, description: str = "") -> str:
+    """
+    Generate a SKILL.md with required YAML frontmatter and progressive disclosure:
+    - Frontmatter (name, description, version)
+    - 2-sentence summary right after frontmatter
+    - Detailed sections below
+    """
     desc = description or (
         f"Use when the user wants to {name.replace('-', ' ')}. "
         f"Describe the specific scenario, action, and outcome here — "
         f"this is the semantic trigger Antigravity matches against."
     )
+    title = name.replace("-", " ").title()
     return textwrap.dedent(f"""\
         ---
         name: {name}
         description: >
           {desc}
+        version: 0.1.0
         ---
 
-        # {name.replace('-', ' ').title()}
+        {title} skill summary goes here in two sentences. State when to use it and what artifact it produces.
+        Keep it semantic so Antigravity can match user requests to this skill.
 
         ## Use this skill when
         - The user asks to [primary use case]
@@ -100,6 +109,28 @@ def make_skill_md(name: str, description: str = "") -> str:
         - Never infer or hallucinate missing inputs — flag them explicitly
         - Always produce a structured artifact, never free-form prose
         - If an error occurs, write a failure artifact rather than silently stopping
+    """)
+
+
+def make_skill_test_py(name: str) -> str:
+    """Boilerplate local verification script for a new skill."""
+    snake = name.replace("-", "_")
+    return textwrap.dedent(f"""\
+        \"\"\"Local verification placeholder for the '{name}' skill.
+
+        Use this to exercise any helper functions you add under scripts/ or alongside the skill.
+        Replace the stub below with real checks once logic exists.
+        \"\"\"
+
+        def main():
+            # TODO: import your skill helpers and run a quick check
+            print("Placeholder test for skill: {name}")
+            # Example:
+            # from .my_helper import run
+            # assert run(sample_input) == expected_output
+
+        if __name__ == "__main__":
+            main()
     """)
 
 
@@ -161,7 +192,7 @@ def make_readme(project_name: str) -> str:
         ## Structure
 
         ```
-        .agent/
+        .agents/
           agents/    ← Agent configs (.yaml)
           skills/    ← Skill definitions (SKILL.md)
         artifacts/   ← Runtime JSON handoffs between agents
@@ -170,8 +201,8 @@ def make_readme(project_name: str) -> str:
 
         ## Getting Started
 
-        1. Edit the skill descriptions in `.agent/skills/*/SKILL.md`
-        2. Configure agents in `.agent/agents/*.yaml`
+        1. Edit the skill descriptions in `.agents/skills/*/SKILL.md`
+        2. Configure agents in `.agents/agents/*.yaml`
         3. Open this folder in [Google Antigravity](https://antigravity.google)
         4. Prompt the Planner agent with your goal
 
@@ -200,7 +231,7 @@ def full_scaffold(root: Path, project_name: str) -> list[FileSpec]:
     """The complete Planner → Worker → QA scaffold."""
     return [
         FileSpec(
-            path=root / ".agent" / "skills" / "task-planner" / "SKILL.md",
+            path=root / ".agents" / "skills" / "task-planner" / "SKILL.md",
             content=make_skill_md(
                 "task-planner",
                 "Use when the user wants to decompose a high-level goal into an "
@@ -210,7 +241,12 @@ def full_scaffold(root: Path, project_name: str) -> list[FileSpec]:
             description="Planner skill",
         ),
         FileSpec(
-            path=root / ".agent" / "skills" / "logic-sanity-check" / "SKILL.md",
+            path=root / ".agents" / "skills" / "task-planner" / "scripts" / "test.py",
+            content=make_skill_test_py("task-planner"),
+            description="Planner skill local test",
+        ),
+        FileSpec(
+            path=root / ".agents" / "skills" / "logic-sanity-check" / "SKILL.md",
             content=make_skill_md(
                 "logic-sanity-check",
                 "Use when the user wants to validate completed task outputs against "
@@ -220,12 +256,17 @@ def full_scaffold(root: Path, project_name: str) -> list[FileSpec]:
             description="QA validation skill",
         ),
         FileSpec(
-            path=root / ".agent" / "agents" / "Planner.yaml",
+            path=root / ".agents" / "skills" / "logic-sanity-check" / "scripts" / "test.py",
+            content=make_skill_test_py("logic-sanity-check"),
+            description="QA skill local test",
+        ),
+        FileSpec(
+            path=root / ".agents" / "agents" / "Planner.yaml",
             content=make_agent_yaml("Planner", "Project Orchestrator", ["task-planner"]),
             description="Planner agent",
         ),
         FileSpec(
-            path=root / ".agent" / "agents" / "QA-Validator.yaml",
+            path=root / ".agents" / "agents" / "QA-Validator.yaml",
             content=make_agent_yaml("QA-Validator", "Quality Assurance Lead", ["logic-sanity-check"]),
             description="QA agent",
         ),
@@ -251,12 +292,17 @@ def minimal_scaffold(root: Path, project_name: str) -> list[FileSpec]:
     """One skill, one agent — bare minimum to get started."""
     return [
         FileSpec(
-            path=root / ".agent" / "skills" / "my-skill" / "SKILL.md",
+            path=root / ".agents" / "skills" / "my-skill" / "SKILL.md",
             content=make_skill_md("my-skill"),
             description="Starter skill",
         ),
         FileSpec(
-            path=root / ".agent" / "agents" / "My-Agent.yaml",
+            path=root / ".agents" / "skills" / "my-skill" / "scripts" / "test.py",
+            content=make_skill_test_py("my-skill"),
+            description="Starter skill local test",
+        ),
+        FileSpec(
+            path=root / ".agents" / "agents" / "My-Agent.yaml",
             content=make_agent_yaml("My-Agent", "Specialist", ["my-skill"]),
             description="Starter agent",
         ),
@@ -277,9 +323,14 @@ def single_skill_scaffold(root: Path, name: str) -> list[FileSpec]:
     slug = name.lower().replace(" ", "-")
     return [
         FileSpec(
-            path=root / ".agent" / "skills" / slug / "SKILL.md",
+            path=root / ".agents" / "skills" / slug / "SKILL.md",
             content=make_skill_md(slug),
             description=f"Skill: {slug}",
+        ),
+        FileSpec(
+            path=root / ".agents" / "skills" / slug / "scripts" / "test.py",
+            content=make_skill_test_py(slug),
+            description=f"Skill test: {slug}",
         ),
     ]
 
@@ -288,7 +339,7 @@ def single_agent_scaffold(root: Path, name: str) -> list[FileSpec]:
     pascal = name.replace("-", " ").title().replace(" ", "-")
     return [
         FileSpec(
-            path=root / ".agent" / "agents" / f"{pascal}.yaml",
+            path=root / ".agents" / "agents" / f"{pascal}.yaml",
             content=make_agent_yaml(pascal),
             description=f"Agent: {pascal}",
         ),
@@ -448,7 +499,7 @@ def main() -> None:
         written_count = sum(1 for f in files if f.path.exists())
         print(f"{green('✓')} Done. {written_count} file(s) written.")
         print(f"\n{dim('Next steps:')}")
-        print(f"  1. Edit skill descriptions in {blue('.agent/skills/*/SKILL.md')}")
+        print(f"  1. Edit skill descriptions in {blue('.agents/skills/*/SKILL.md')}")
         print(f"  2. Open {blue(str(root))} in Google Antigravity")
         print(f"  3. Run {blue('python schema/validate.py')} to check your configs")
         print()

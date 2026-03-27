@@ -150,6 +150,45 @@ Do not over-engineer.
 
 ---
 
+# 7️⃣ Reviewer-Worker Loop (Validator Pattern)
+
+**Planner → Worker → Validator** ensures outputs are actionable and safe before marking tasks complete.
+
+- Planner creates an ordered task list with owners and expected artifacts.
+- Worker (Data or Specialist) executes a task and writes the artifact.
+- Validator reviews the artifact against acceptance criteria and common failure modes (missing error handling, vague tasks, absent artifacts, untested edges).
+- If Validator fails the artifact, it sends concise fix notes back to the Worker; loop continues until pass.
+- If requirements are ambiguous, Validator escalates to Planner for clarification instead of guessing.
+
+Benefits:
+- Prevents “God Agent” behavior by isolating review from execution.
+- Catches structural issues early (unclear tasks, missing outputs, weak validation).
+- Produces a QA report artifact, improving auditability and trust.
+
+---
+
+# Skill Selection Decision Tree
+
+Use this quick mapping to choose the right skill:
+
+| If input / need | Use this skill | Expected artifact |
+| --- | --- | --- |
+| Raw CSV / JSON needs cleaning or shaping | Data-Cleaner | `artifacts/cleaned-data.json` or `.csv` |
+| User goal is broad and unstructured | Task-Planner | `artifacts/tasks.json` |
+| Content needs to be drafted from supplied data/outline | Content-Writer | `artifacts/output.md` |
+| Completed output needs validation against criteria | Logic-Sanity-Check (Validator) | `artifacts/qa-report.json` |
+| Ambiguous requirements or missing data | Planner clarification loop (re-plan) | Updated `artifacts/tasks.json` |
+| Terminal permission/governance checks | Runtime Governance helper | `.agents/runtime.log` |
+
+Guideline: Prefer the most specific skill that produces a structured artifact the next agent can consume. If none match, escalate to Planner to refine the ask.
+
+Schemas for validation:
+- `schema/artifacts/tasks.schema.json`
+- `schema/artifacts/output.schema.json`
+- `schema/artifacts/qa-report.schema.json`
+
+---
+
 # Closing Thought
 
 Orchestration is about structure, not complexity.

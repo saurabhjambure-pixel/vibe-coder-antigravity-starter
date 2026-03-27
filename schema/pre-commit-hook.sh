@@ -19,8 +19,8 @@ VALIDATE="$REPO_ROOT/schema/validate.py"
 # Only run if skill or agent files changed in this commit
 CHANGED=$(git diff --cached --name-only)
 
-SKILL_CHANGED=$(echo "$CHANGED" | grep -E '\.agent/skills/.+/SKILL\.md' || true)
-AGENT_CHANGED=$(echo "$CHANGED" | grep -E '\.agent/agents/.+\.yaml' || true)
+SKILL_CHANGED=$(echo "$CHANGED" | grep -E '\.agents/skills/.+/SKILL\.md' || true)
+AGENT_CHANGED=$(echo "$CHANGED" | grep -E '\.agents/agents/.+\.yaml' || true)
 
 if [ -z "$SKILL_CHANGED" ] && [ -z "$AGENT_CHANGED" ]; then
   exit 0

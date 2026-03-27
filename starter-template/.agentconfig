@@ -1,0 +1,19 @@
+# Governance policy for agent permission boundaries.
+# This file is the source of truth for what the agent may execute in the terminal.
+
+allow:
+  - "ls"
+  - "ls -la"
+  - "git status"
+  - "git diff"
+  - "pytest"
+  - "python --version"
+
+deny:
+  - "rm -rf *"
+  - "rm -rf /"
+  - "mkfs"
+  - "mkfs.*"
+  - "chmod 777"
+  - "chown *"
+  - "sudo *"

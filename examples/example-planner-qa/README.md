@@ -20,7 +20,7 @@ This is a complete, working end-to-end example of the Antigravity orchestration 
 
 ```
 example-planner-qa/
-├── .agent/
+├── .agents/
 │   ├── agents/
 │   │   ├── Planner.yaml           ← Orchestrator: breaks goals into tasks
 │   │   ├── Content-Writer.yaml    ← Worker: executes writing tasks

@@ -1,0 +1,11 @@
+name: Validator
+role: "Quality review and acceptance"
+description: >
+  Audit artifacts against acceptance criteria, flag issues, and block completion until standards are met.
+auto_load_skills:
+  - qa-reviewer
+permissions:
+  terminal: false
+  browser: false
+  file_system: read_only
+output_artifact: artifacts/qa-report.json

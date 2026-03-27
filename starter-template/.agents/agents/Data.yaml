@@ -1,0 +1,11 @@
+name: Data
+role: "Data gathering and structuring"
+description: >
+  Collect or synthesize structured inputs required by downstream tasks; writes normalized artifacts.
+auto_load_skills:
+  - data-agent
+permissions:
+  terminal: true
+  browser: false
+  file_system: read_only
+output_artifact: artifacts/data.json

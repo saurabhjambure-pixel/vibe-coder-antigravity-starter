@@ -16,7 +16,7 @@ Every Antigravity system is built from four primitives:
 
 ## Skills
 
-Skills are modular capabilities.
+Skills = **Capabilities** (what can be done).
 
 A skill should:
 - Perform exactly one responsibility
@@ -40,7 +40,7 @@ Bad skill design:
 
 ## Agents
 
-Agents are specialized workers that use skills.
+Agents = **Personas/Responsibilities** (who does it).
 
 An agent should:
 - Have a narrow role
@@ -82,6 +82,15 @@ Without artifacts, you only have reasoning.
 With artifacts, you have evidence.
 
 Always prefer structured outputs over free-form text.
+
+### Artifact Standards
+
+A high-quality artifact is:
+- **Status-tagged**: `[DRAFT]`, `[IN-REVIEW]`, or `[APPROVED]` in the header.
+- **Structured**: JSON/YAML/CSV/Markdown with clear sections and schema notes.
+- **Traceable**: Lists source inputs and assumptions; includes timestamps.
+- **Actionable**: States next action or acceptance state; avoids vague prose.
+- **Validatable**: Contains check results or schema that downstream agents/QA can verify.
 
 ---
 
@@ -126,6 +135,20 @@ Be intentional.
 
 ---
 
+# Skill Selection Decision Aid
+
+| If input / need | Pick this Skill | Produces |
+| --- | --- | --- |
+| Raw CSV/JSON needs cleaning or shaping | Data-Cleaner | `artifacts/cleaned-data.json` |
+| Broad, unstructured goal | Task-Planner | `artifacts/tasks.json` |
+| Write content from given data/outline | Content-Writer | `artifacts/output.md` |
+| Validate output against acceptance criteria | Logic-Sanity-Check (Validator) | `artifacts/qa-report.json` |
+| Missing clarity on requirements | Planner clarification loop | Updated `artifacts/tasks.json` |
+
+Rule of thumb: choose the most specific skill that yields a structured artifact the next agent can consume; if none match, escalate to Planner.
+
+---
+
 # 3️⃣ Layered Architecture Model
 
 Think in layers:
@@ -165,6 +188,17 @@ Restricting permissions:
 - Improves determinism
 - Reduces misuse
 - Simplifies debugging
+
+## Runtime Sandbox (new)
+
+If you want the repo’s examples to actually enforce the above boundaries, load `antigravity.yaml` with the lightweight Python runtime in `runtime/`. It:
+- Parses `execution_mode`, terminal allow/deny, filesystem allow/deny, and governance flags.
+- Exposes helpers for command gating and path checks.
+- Ships with pytest coverage in `tests/test_runtime` so you can extend rules safely.
+
+Opt-in/out:
+- **Use it** when you want reproducible guardrails for demos or teaching.
+- **Skip it** if you’re only reading patterns—nothing else depends on it.
 
 ---
 

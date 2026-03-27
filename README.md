@@ -52,13 +52,23 @@ Not perfect — but controlled.
 
 ### `starter-template/`
 
-A minimal `.agent` setup with:
+A minimal `.agents` setup with:
 
 * A few narrowly scoped skills
 * Three focused agents (Planner, Data, QA)
 * Explicit permission boundaries
 
 It’s intentionally small and opinionated.
+
+### Quickstart
+
+```bash
+python3 examples/demo-run/run_demo.py   # generate sample artifacts
+python3 -m pytest                       # run tests (includes demo smoke)
+python3 schema/validate.py              # validate skills/agents if present
+```
+
+Or use shortcuts: `make demo`, `make test`, `make validate`.
 
 ---
 
@@ -114,4 +124,3 @@ AI systems don’t break because they aren’t smart enough.
 They break because responsibilities aren’t clear.
 
 This repo is my attempt to make those boundaries explicit.
-

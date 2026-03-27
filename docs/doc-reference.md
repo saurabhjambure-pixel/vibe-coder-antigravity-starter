@@ -35,7 +35,7 @@ Antigravity achieves automatic skill selection through Semantic Triggering, wher
 
 ### Skill Scopes
 
-Skills can be defined at two scopes: Workspace Scope, located in `<workspace-root>/.agent/skills/`, available only within the specific project; and Global Scope, located in `~/.gemini/antigravity/skills/`, available across all projects on the user's machine.
+Skills can be defined at two scopes: Workspace Scope, located in `<workspace-root>/.agents/skills/`, available only within the specific project; and Global Scope, located in `~/.gemini/antigravity/skills/`, available across all projects on the user's machine.
 
 ### Permission System
 
@@ -84,7 +84,7 @@ description: One sentence describing when the agent should use this skill. This 
 ## Official Skill Directory Structure
 
 ```
-.agent/skills/
+.agents/skills/
 └── my-skill/
     ├── SKILL.md          # Required — definition and instructions
     ├── scripts/          # Optional — Python, Bash, or Node scripts
@@ -101,8 +101,8 @@ The design is intentionally simple, relying on widely understood formats like Ma
 
 | Convention used in this repo | Official status | Notes |
 |---|---|---|
-| `.agent/skills/<name>/SKILL.md` | ✅ Canonical | Matches workspace scope path exactly |
-| `.agent/agents/<name>.yaml` | ⚠️ Community pattern | Official docs don't define a standard agent.yaml spec — this is an emerging convention common in the community but not yet in official docs |
+| `.agents/skills/<name>/SKILL.md` | ✅ Canonical | Matches workspace scope path exactly |
+| `.agents/agents/<name>.yaml` | ⚠️ Community pattern | Official docs don't define a standard agent.yaml spec — this is an emerging convention common in the community but not yet in official docs |
 | `triggers:` list in SKILL.md frontmatter | ⚠️ Community extension | Not in the official spec. Description alone drives triggering. Kept here for clarity but may not be parsed by the engine |
 | `auto_load_skills:` in agent.yaml | ⚠️ Community pattern | Not documented officially. In practice, skills load semantically — this field serves as human-readable intent documentation |
 | `permissions:` block in agent.yaml | ⚠️ Community pattern | Real permissions are set in Antigravity's Settings UI (Agent Manager → Settings → Advanced), not via file |

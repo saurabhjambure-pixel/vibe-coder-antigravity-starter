@@ -3,13 +3,13 @@ name: Validate Skills & Agents
 on:
   push:
     paths:
-      - ".agent/skills/**/SKILL.md"
-      - ".agent/agents/*.yaml"
+      - ".agents/skills/**/SKILL.md"
+      - ".agents/agents/*.yaml"
       - "schema/**"
   pull_request:
     paths:
-      - ".agent/skills/**/SKILL.md"
-      - ".agent/agents/*.yaml"
+      - ".agents/skills/**/SKILL.md"
+      - ".agents/agents/*.yaml"
       - "schema/**"
 
 jobs:

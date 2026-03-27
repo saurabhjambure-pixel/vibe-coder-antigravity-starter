@@ -94,17 +94,17 @@ cp schema/ci-validate.yml .github/workflows/validate.yml
 
 ```
 Skills (3 found)
-✓ .agent/skills/logic-sanity-check/SKILL.md
-✓ .agent/skills/task-planner/SKILL.md
-✗ .agent/skills/content-writer/SKILL.md
+✓ .agents/skills/logic-sanity-check/SKILL.md
+✓ .agents/skills/task-planner/SKILL.md
+✗ .agents/skills/content-writer/SKILL.md
   Field 'description': 'Write content' is too short (minimum 40 characters)
   ⚠ missing Guardrails section
 
 Agents (3 found)
-✓ .agent/agents/Planner.yaml
-✓ .agent/agents/QA-Validator.yaml
-✓ .agent/agents/Content-Writer.yaml
-  ⚠ auto_load_skills references 'anomaly-detector' but .agent/skills/anomaly-detector/ does not exist
+✓ .agents/agents/Planner.yaml
+✓ .agents/agents/QA-Validator.yaml
+✓ .agents/agents/Content-Writer.yaml
+  ⚠ auto_load_skills references 'anomaly-detector' but .agents/skills/anomaly-detector/ does not exist
 
 ✗ 1 validation error(s) found
 ```

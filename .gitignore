@@ -1,0 +1,9 @@
+# Bytecode / caches
+__pycache__/
+*.pyc
+
+# Local agent runtime logs
+.agents/*.log
+
+# OS cruft
+.DS_Store

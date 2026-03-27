@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QA Report",
+  "type": "object",
+  "required": ["status", "issues", "checked_artifact"],
+  "properties": {
+    "status": {"type": "string", "enum": ["PASS", "FAIL", "WARN"]},
+    "checked_artifact": {"type": "string"},
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "message"],
+        "properties": {
+          "severity": {"type": "string", "enum": ["blocker", "minor", "note"]},
+          "message": {"type": "string"},
+          "location": {"type": "string"}
+        }
+      }
+    },
+    "notes": {"type": "string"}
+  }
+}

@@ -32,8 +32,8 @@ except ImportError:
 
 REPO_ROOT = Path(__file__).parent.parent
 SCHEMA_DIR = REPO_ROOT / "schema"
-SKILLS_DIR = REPO_ROOT / ".agent" / "skills"
-AGENTS_DIR = REPO_ROOT / ".agent" / "agents"
+SKILLS_DIR = REPO_ROOT / ".agents" / "skills"
+AGENTS_DIR = REPO_ROOT / ".agents" / "agents"
 
 SKILL_SCHEMA_PATH = SCHEMA_DIR / "skill.schema.json"
 AGENT_SCHEMA_PATH = SCHEMA_DIR / "agent.schema.json"
@@ -126,7 +126,7 @@ def lint_agent_content(path: Path, data: dict) -> list[str]:
             if not skill_path.exists():
                 warnings.append(
                     f"  ⚠ auto_load_skills references '{skill_name}' "
-                    f"but .agent/skills/{skill_name}/ does not exist"
+                    f"but .agents/skills/{skill_name}/ does not exist"
                 )
 
     perms = data.get("permissions", {})

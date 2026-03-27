@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Content Output",
+  "type": "object",
+  "required": ["status", "title", "body"],
+  "properties": {
+    "status": {"type": "string", "enum": ["DRAFT", "APPROVED", "IN-REVIEW"]},
+    "title": {"type": "string"},
+    "body": {"type": "string"},
+    "metadata": {"type": "object"}
+  }
+}

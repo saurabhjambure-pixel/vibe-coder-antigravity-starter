@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Plan",
+  "type": "object",
+  "required": ["status", "tasks"],
+  "properties": {
+    "status": {"type": "string"},
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "summary", "artifact"],
+        "properties": {
+          "id": {"type": "integer"},
+          "owner": {"type": "string"},
+          "summary": {"type": "string"},
+          "depends_on": {"type": "array", "items": {"type": "integer"}},
+          "artifact": {"type": "string"}
+        }
+      }
+    }
+  }
+}
