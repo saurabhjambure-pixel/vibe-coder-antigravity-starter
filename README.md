@@ -3,117 +3,107 @@
 
 > A structured starter reference for learning multi-agent workflows in Google Antigravity.
 
-I’m a PM learning to vibe code seriously.
+---
 
-While experimenting with Antigravity, one thing became obvious:
+## ⚡ Try It Right Now (in Antigravity IDE)
 
-The model wasn’t the problem.
-Structure was.
+Copy `starter-template/` into your project. Three agents appear in the panel — here’s what to say to each:
 
-When everything lives in one giant agent with vague instructions, it works… until it doesn’t.
+**With the Planner agent selected:**
+```
+Plan this: I need to analyze last month’s sales data and write a summary report.
+```
 
-So this repo is my attempt to design more deliberately:
+**With the Data agent selected:**
+```
+Collect and structure the inputs from artifacts/tasks.json
+```
 
-* What a **Skill** should own
-* What an **Agent** should own
-* How responsibilities should be separated
-* How validation should be built in
+**With the Validator agent selected:**
+```
+Review the output at artifacts/data.json against the tasks in artifacts/tasks.json
+```
 
-This is not an official guide.
-It’s a structured way to approach multi-agent design while learning.
+That’s the full loop. → **[Step-by-step setup guide](starter-template/GETTING-STARTED.md)** | **[All prompts & triggers](CHEATSHEET.md)**
 
 ---
 
-## 🧠 The Shift That Helped Me
+## 🧠 The Idea in 30 Seconds
 
-Instead of writing bigger prompts:
+Most Antigravity pain comes from one source: too much responsibility in one place.
 
-* **Skills define capability**
-* **Agents define responsibility**
-* **Validation builds trust**
+The fix:
+* **Skills** = what can be done (modular, one job each)
+* **Agents** = who does it (a role, not a chatbot)
+* **Artifacts** = structured handoffs between agents (JSON, not vibes)
 
-Once I separated those cleanly, my experiments became far more predictable.
-
-Not perfect — but controlled.
+Once those are separate, experiments become predictable.
 
 ---
 
 ## 📂 What’s Inside
 
-### `docs/`
+| Path | What it gives you |
+|---|---|
+| `starter-template/` | Copy-paste boilerplate — 3 agents, 3 skills, ready to fork |
+| `CHEATSHEET.md` | One-page reference: all trigger phrases, agents, and prompt patterns |
+| `examples/example-planner-qa/` | Full working demo: Planner → Writer → QA with real artifacts |
+| `docs/architecture-guide.md` | The mental model behind all of this |
+| `docs/orchestration-patterns.md` | PDCA, delegation, escalation — when to use each |
+| `schema/` | JSON schemas + CLI validator for your skills/agents |
+| `scaffold.py` | Interactive generator: `python scaffold.py --name my-skill --type skill` |
 
-* `architecture-guide.md` → Layered thinking for skills, agents, and governance
-* `orchestration-patterns.md` → Practical multi-agent coordination patterns
+---
 
-### `examples/`
+## 🚀 Get Started
 
-* Clear skill templates
-* Focused agent templates
+**Option A — Just use the starter template (recommended for vibe coders)**
 
-### `starter-template/`
+1. Copy `starter-template/` into your Antigravity project
+2. Open `starter-template/GETTING-STARTED.md` — it walks you through the first 5 minutes
+3. Start with the Planner agent and say `Plan this:` followed by any goal
 
-A minimal `.agents` setup with:
-
-* A few narrowly scoped skills
-* Three focused agents (Planner, Data, QA)
-* Explicit permission boundaries
-
-It’s intentionally small and opinionated.
-
-### Quickstart
+**Option B — Run the demo locally first**
 
 ```bash
-python3 examples/demo-run/run_demo.py   # generate sample artifacts
-python3 -m pytest                       # run tests (includes demo smoke)
-python3 schema/validate.py              # validate skills/agents if present
+python3 examples/demo-run/run_demo.py   # generates sample artifacts
+python3 -m pytest                       # runs tests
+python3 schema/validate.py              # validates your skills/agents
 ```
 
-Or use shortcuts: `make demo`, `make test`, `make validate`.
+Or: `make demo`, `make test`, `make validate`
+
+**Option C — Read before you build**
+
+Start with `docs/architecture-guide.md` for the full mental model.
 
 ---
 
 ## 🎯 Who This Is For
 
-* PMs learning to vibe code
-* Builders experimenting with Antigravity
-* Anyone trying to avoid messy multi-agent setups
+* PMs and builders learning to vibe code on Antigravity
+* Anyone whose multi-agent setup keeps going sideways
+* Teams who want auditable, structured agent outputs
 
-If you’re looking for production-grade distributed systems architecture, this isn’t that.
-
-If you’re trying to think more clearly about structure, it might help.
+Not for: production distributed systems architecture. This is intentionally a disciplined starting point.
 
 ---
 
 ## ⚠ What This Repo Is Not
 
 * Not an official Antigravity framework
-* Not a production-ready architecture
 * Not a collection of prompt hacks
 * Not a complete solution
 
-It’s a disciplined starting point.
-
----
-
-## 🚀 How to Use This
-
-1. Read the architecture guide.
-2. Explore the skill and agent templates.
-3. Fork the starter template.
-4. Add one skill at a time.
-5. Resist the urge to create a “god agent.”
-
-The goal isn’t complexity.
-
-It’s clarity.
+It’s a structured way to think about agents while you learn.
 
 ---
 
 ## 🤝 Feedback Welcome
 
-I’m still learning, but I’m being intentional about structure.
+I’m still learning but being intentional about structure.
 
-If you’re experimenting with multi-agent workflows, I’d genuinely appreciate thoughtful feedback or improvements.
+If you’re experimenting with multi-agent workflows, thoughtful feedback and improvements are genuinely appreciated.
 
 ---
 
@@ -122,5 +112,3 @@ If you’re experimenting with multi-agent workflows, I’d genuinely appreciate
 AI systems don’t break because they aren’t smart enough.
 
 They break because responsibilities aren’t clear.
-
-This repo is my attempt to make those boundaries explicit.

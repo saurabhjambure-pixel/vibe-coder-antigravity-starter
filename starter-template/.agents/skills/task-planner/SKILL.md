@@ -25,3 +25,20 @@ Ensure the plan yields concrete artifacts the downstream agents can validate.
 - Prefer fewer, atomic tasks over verbose lists.
 - Avoid assigning tasks to unspecified agents; stick to available roles.
 - Always specify expected artifact filenames under `.agents/` or `artifacts/`.
+
+## 💬 Example prompts that trigger this skill
+
+```
+Plan this: I need to research our top 3 competitors and write a comparison report.
+```
+```
+Plan this: Build a weekly digest of customer feedback from our support tickets.
+```
+```
+Create a task plan for launching a new onboarding email sequence.
+```
+```
+What steps do we need to produce a Q2 performance summary?
+```
+
+The Planner will output `artifacts/tasks.json` — review it before switching to the next agent.
