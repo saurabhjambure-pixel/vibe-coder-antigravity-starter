@@ -25,3 +25,20 @@ Prefer lightweight, reproducible retrieval over free-form narration.
 - Cite sources when available; flag confidence if uncertain.
 - Do not fabricate data; mark placeholders clearly.
 - Keep outputs structured and minimal for downstream agents.
+
+## 💬 Example prompts that trigger this skill
+
+```
+Collect and structure the inputs for the tasks assigned to me in artifacts/tasks.json
+```
+```
+Gather structured data for task 2 from artifacts/tasks.json
+```
+```
+Structure the data from the CSV in /data/sales.csv for downstream analysis
+```
+```
+Synthesize information about [topic] and write it to artifacts/data.json
+```
+
+The Data agent will output `artifacts/data.json` — review it before switching to the Validator.

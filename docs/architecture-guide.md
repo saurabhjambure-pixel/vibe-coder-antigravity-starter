@@ -1,5 +1,7 @@
 # Architecture Guide
 
+> **In a hurry?** Jump to the [30-Second Mental Model](#-30-second-mental-model) below, then come back for the details.
+
 Antigravity is not a chat interface.
 
 It is an orchestration platform built around modular skills, controlled agents, and structured artifacts.
@@ -7,6 +9,34 @@ It is an orchestration platform built around modular skills, controlled agents, 
 If you treat it like autocomplete, your system will become unpredictable as complexity increases.
 
 This guide explains how to design multi-agent systems that are reliable, scalable, and auditable.
+
+---
+
+## ⚡ 30-Second Mental Model
+
+If you read nothing else, read this:
+
+| Concept | Think of it as | One-line rule |
+|---|---|---|
+| **Skill** | A function | Does exactly one thing; never two |
+| **Agent** | A role / job title | Loads only the skills it needs for its job |
+| **Artifact** | A structured handoff | JSON output that the next agent reads, not free text |
+| **Orchestration** | The pipeline | Planner → Specialists → QA; each stage reads the previous artifact |
+
+**The loop:**
+```
+1. Planner gets a goal → writes artifacts/tasks.json
+2. Specialist reads tasks.json → does the work → writes artifacts/output.json
+3. QA reads output.json vs tasks.json → writes pass/fail verdict
+4. If failed → back to step 1 with refined goal
+```
+
+**The one anti-pattern to avoid:**  
+One agent that does all of the above. That's a "god agent" — it works until it doesn't, and when it breaks, you can't tell why.
+
+→ Ready for details? Read on. Want to just build? Start with [starter-template/GETTING-STARTED.md](../starter-template/GETTING-STARTED.md).
+
+---
 
 ---
 

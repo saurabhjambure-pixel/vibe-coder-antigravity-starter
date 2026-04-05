@@ -25,3 +25,21 @@ Aim for deterministic checks and concise recommendations.
 - Do not rewrite deliverables; limit to evaluation and precise fix notes.
 - Call out missing artifacts explicitly instead of guessing.
 - Keep verdicts bounded: `pass`, `pass-with-notes`, or `fail`.
+
+## 💬 Example prompts that trigger this skill
+
+```
+Review artifacts/data.json against the acceptance criteria in artifacts/tasks.json
+```
+```
+Validate the output at artifacts/data.json
+```
+```
+Run sanity check on artifacts/data.json
+```
+```
+Does the output in artifacts/data.json meet the requirements in artifacts/tasks.json?
+```
+
+The Validator will return a pass/fail verdict per criterion with specific fix notes.
+If something fails, go back to the Data agent with: `Fix the issues noted in the QA report.`
